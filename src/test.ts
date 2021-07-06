@@ -25,7 +25,7 @@ const testUnit = {
         chainTime.end()
         console.log('sleep1000:'+JSON.stringify(chainTime.getTiggerData(),null,2))
     },
-    [Symbol('test.start-timeout-end')] : async function() {
+    [Symbol('test.start-timeout')] : async function() {
         const timeOut = 1500;
         const chainTime = new ChainTime({
             tiggerFunction:()=>{
@@ -41,6 +41,25 @@ const testUnit = {
         chainTime.record('world');
         await sleep(1000);
         chainTime.end()
+    },
+    [Symbol('test.start-timeout-end')] : async function() {
+        const timeOut = 5500;
+        const chainTime = new ChainTime({
+            tiggerFunction:()=>{
+                console.log(`timeout${timeOut}-end:`+JSON.stringify(chainTime.getTiggerData(),null,2))
+            },
+            tiggerType:TiggerType.Timeout,
+            timeOut
+        });
+        chainTime.start()
+        console.log(`timeout${timeOut}-end:start`);
+        await sleep(1000);
+        chainTime.record('hello');
+        await sleep(1000);
+        chainTime.record('world');
+        await sleep(1000);
+        chainTime.end()
+        console.log(`timeout${timeOut}-end:end`);
     },
     [Symbol('test.start-all-end')] : async function() {
         const chainTime = new ChainTime({

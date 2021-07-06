@@ -48,7 +48,10 @@ export class ChainTime {
         if(name===RecordType.Start) {
             if(this.tiggerType===TiggerType.Timeout && this.timeOut) {
                 const timeOutKey = setTimeout(()=>{
-                    runTigger();
+                    if(this.chainTimeDataList[this.chainTimeDataList.length-1].name!==RecordType.End)
+                    {
+                        runTigger();
+                    }
                     clearTimeout(timeOutKey)
                 },this.timeOut)
             }
